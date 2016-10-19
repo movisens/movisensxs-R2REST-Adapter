@@ -1,0 +1,1 @@
+movisens.xsadapter.conf.apiPath <- 'api/v2'
