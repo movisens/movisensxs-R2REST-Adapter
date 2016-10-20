@@ -5,8 +5,8 @@ library(logging)
 
 print(getwd())
 
-source('utils.R')
-source('config.R')
+source('./utils.R')
+source('./config.R')
 
 adapter.conf.probandColumns <- c("id", "currentVersion", "status", "currentDevice", "coupleDate", "startDate", "endDate")
 
