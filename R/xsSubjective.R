@@ -3,10 +3,10 @@ library(httr)
 library(digest)
 library(logging)
 
+source('R/utils.R')
+source('R/config.R')
 
 downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), .getOverallResultsPath(studyId), sep='/')
   callSubjectiveResultsRESTAPIOperation(operationCallPath, apiKey)
@@ -15,8 +15,6 @@ downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
 .getOverallResultsPath <- function(studyId){paste("studies", studyId, "results", sep='/')}
 
 downloadSubjectiveDataAsJson <- function(xsServerURL, studyId, probandId, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), .getProbandsResultsPath(studyId, probandId), sep='/')
   callSubjectiveResultsRESTAPIOperation(operationCallPath, apiKey)
@@ -25,8 +23,6 @@ downloadSubjectiveDataAsJson <- function(xsServerURL, studyId, probandId, apiKey
 .getProbandsResultsPath <- function(studyId, probandId){paste("studies", studyId, 'probands', probandId, "results", sep='/')}
 
 callSubjectiveResultsRESTAPIOperation <- function(operationCallPath, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   authHeader <- auth(apiKey)
   loginfo(paste("Downloading Forms by URL:", operationCallPath), logger='xs_adapter')

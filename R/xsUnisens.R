@@ -3,10 +3,10 @@ library(httr)
 library(digest)
 library(logging)
 
+source('R/utils.R')
+source('R/config.R')
 
 downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   loginfo(paste('Downloading from movisens-server', xsServerURL, '...'), logger='xs_adapter')
   fromURL <- paste(getXSAPIURL(xsServerURL), .getUnisensPath(studyXSId, probandXSId), sep='/')
