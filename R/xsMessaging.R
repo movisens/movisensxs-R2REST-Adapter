@@ -3,10 +3,10 @@ library(digest)
 library(logging)
 library(jsonlite)
 
+source('R/utils.R')
+source('R/config.R')
 
 sendMessageToProband = function(xsServerURL, studyXSId, probandXSId, messageSendingUserEmail, textMessage, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   loginfo(paste("Sending message to proband", paste(studyXSId, probandXSId, sep = " x "), ". Message:", textMessage), logger='xs_adapter')
   messageSendUrl <- paste(getXSAPIURL(xsServerURL), .getMessagePathOfProband(studyXSId, probandXSId, messageSendingUserEmail, textMessage), sep='/')

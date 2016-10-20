@@ -3,11 +3,12 @@ library(httr)
 library(digest)
 library(logging)
 
+source('R/utils.R')
+source('R/config.R')
+
 adapter.conf.probandColumns <- c("id", "currentVersion", "status", "currentDevice", "coupleDate", "startDate", "endDate")
 
 downloadProbands <- function(xsServerURL, studyId, apiKey){
-  source('R/utils.R')
-  source('R/config.R')
   getLogger('xs_adapter')
   loginfo("Downloading Probands from XSServer", logger='xs_adapter')
   fromURL <- paste(getXSAPIURL(xsServerURL), .getProbandsPath(studyId), sep='/')
