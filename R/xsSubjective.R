@@ -1,8 +1,8 @@
-library(jsonlite)
-library(httr)
-library(digest)
-library(logging)
-
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#'
+NULL
 
 adapter.conf.xsSubjectiveColumns <- c('Participant', 'Trigger', 'Trigger_date', 'Trigger_counter', 'Form', 'Form_start_date', 'Form_finish_date', 'Form_upload_date', 'Missing')
 
@@ -81,7 +81,7 @@ downloadSubjectiveDataAsJson <- function(xsServerURL, studyId, probandId, apiKey
 #' Download all subjective data of a study in one xlsx-file
 #' @param xsServerURL the address of the xs server
 #' @param studyId the xs-id of the study
-#' @param the secret api-key of the study
+#' @param apiKey the secret api-key of the study
 #' @export
 downloadOverallSubjectiveDataAsXLSX <- function(xsServerURL, studyId, apiKey){
   getLogger('xs_adapter')

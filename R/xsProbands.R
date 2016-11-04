@@ -1,13 +1,14 @@
-library(jsonlite)
-library(httr)
-library(digest)
-library(logging)
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#'
+NULL
 
 adapter.conf.probandColumns <- c("id", "currentVersion", "coupleURL", "status", "currentDevice", "coupleDate", "startDate", "endDate")
 
 #' Download all proband data of a study
 #' @param xsServerURL the address of the xs server
-#' @param studyXSId the xs-id of the study
+#' @param studyId the xs-id of the study
 #' @param apiKey the secret api-key of the study
 #' @export
 #'

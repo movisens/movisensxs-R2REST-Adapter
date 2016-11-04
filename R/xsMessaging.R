@@ -1,12 +1,8 @@
-library(httr)
-library(digest)
-library(logging)
-library(jsonlite)
-
-# source('R/utils.R')
-# source('R/config.R')
-# source('R/xsExceptions.R')
-# source('R/apiRoutes.R')
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#'
+NULL
 
 adapter.conf.xsMessagingColumns <- c('id', 'creationDate', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')
 

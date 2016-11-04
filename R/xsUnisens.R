@@ -1,7 +1,7 @@
-library(jsonlite)
-library(httr)
-library(digest)
-library(logging)
+#' @import jsonlite
+#' @import httr
+#' @import logging
+NULL
 
 
 #' Download all Unisens data of a study's proband as a zip file

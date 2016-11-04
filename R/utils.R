@@ -1,4 +1,6 @@
-library(lubridate)
+#' @import lubridate
+#'
+NULL
 
 completeMissingColumns = function(tbl, allColnames){
   additionalCols <- allColnames[!is.element(allColnames, colnames(tbl))]
