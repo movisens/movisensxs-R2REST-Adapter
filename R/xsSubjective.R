@@ -3,13 +3,14 @@ library(httr)
 library(digest)
 library(logging)
 
-source('R/utils.R')
-source('R/config.R')
-source('R/xsExceptions.R')
-source('R/apiRoutes.R')
 
 adapter.conf.xsSubjectiveColumns <- c('Participant', 'Trigger', 'Trigger_date', 'Trigger_counter', 'Form', 'Form_start_date', 'Form_finish_date', 'Form_upload_date', 'Missing')
 
+#' Download all subjective data of a study in one request
+#' @param xsServerURL the address of the xs server
+#' @param studyId the xs-id of the study
+#' @param apiKey the secret api-key of the study
+#' @export
 downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), getOverallResultsPath(studyId), sep='/')
@@ -65,18 +66,35 @@ downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
   resultFile
 }
 
+#' Download all subjective data of a study's proband
+#' @param xsServerURL the address of the xs server
+#' @param studyId the xs-id of the study
+#' @param probandId the xs-id of the proband
+#' @param apiKey the secret api-key of the study
+#' @export
 downloadSubjectiveDataAsJson <- function(xsServerURL, studyId, probandId, apiKey){
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), getProbandsResultsPath(studyId, probandId), sep='/')
   .callSubjectiveResultsRESTAPIOperation(operationCallPath, apiKey, acceptHeader(jsonMIME))
 }
 
+#' Download all subjective data of a study in one xlsx-file
+#' @param xsServerURL the address of the xs server
+#' @param studyId the xs-id of the study
+#' @param the secret api-key of the study
+#' @export
 downloadOverallSubjectiveDataAsXLSX <- function(xsServerURL, studyId, apiKey){
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), getOverallResultsPath(studyId), sep='/')
   .callSubjectiveResultsRESTAPIOperation(operationCallPath, apiKey, acceptHeader(xlsxMIME))
 }
 
+#' Download all subjective data of a study's proband in one xlsx-file
+#' @param xsServerURL the address of the xs server
+#' @param studyId the xs-id of the study
+#' @param probandId the xs-id of the proband
+#' @param apiKey the secret api-key of the study
+#' @export
 downloadSubjectiveDataAsXLSX <- function(xsServerURL, studyId, probandId, apiKey){
   getLogger('xs_adapter')
   operationCallPath <- paste(getXSAPIURL(xsServerURL), getProbandsResultsPath(studyId, probandId), sep='/')
