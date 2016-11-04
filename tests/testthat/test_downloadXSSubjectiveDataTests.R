@@ -3,7 +3,6 @@ library(testthat)
 setwd('../..')
 
 source('tests/testthat/_test.config.R')
-source('R/xsSubjective.R')
 
 .checkSingleProbandResult <- function(result){
   expect_gt(nrow(result), 1)

@@ -3,8 +3,6 @@ library(testthat)
 setwd('../..')
 
 source('tests/testthat/_test.config.R')
-source('R/xsProbands.R')
-source('R/xsExceptions.R')
 
 test_that('downloadProbandTable_correctRequestParameters_validResult', {
   # build

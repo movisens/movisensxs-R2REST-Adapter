@@ -3,7 +3,6 @@ library(testthat)
 setwd('../..')
 
 source('tests/testthat/_test.config.R')
-source('R/xsUnisens.R')
 
 test_that('downloadUnisensData_downloadUnisensData_unisensFiles', {
   # build

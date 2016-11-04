@@ -3,7 +3,6 @@ library(assertthat)
 setwd('../..')
 
 source('tests/testthat/_test.config.R')
-source('R/xsMessaging.R')
 
 test_that('integrationalTestWithMovisensXSServer_sendMessageToProband_serverAvailable_messageSent', {
   # build
