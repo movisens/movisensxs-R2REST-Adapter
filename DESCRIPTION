@@ -8,3 +8,7 @@ Depends:
 License: LGPL
 LazyData: true
 Suggests: testthat
+Imports:
+    logging,
+    httr
+    jsonlite

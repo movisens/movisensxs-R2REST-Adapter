@@ -1,6 +1,5 @@
 import(jsonlite)
 import(httr)
-import(digest)
 import(logging)
 export("downloadProbands")
 export('sendMessageToProband')
