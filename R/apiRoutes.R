@@ -1,3 +1,7 @@
+#' @import utils
+#'
+NULL
+
 getProbandsPath <- function(studyId){
   paste("studies", studyId, "probands", sep = '/')
 }

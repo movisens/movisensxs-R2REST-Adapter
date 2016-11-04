@@ -1,6 +1,7 @@
 #' @import jsonlite
 #' @import httr
 #' @import logging
+#' @import utils
 NULL
 
 
