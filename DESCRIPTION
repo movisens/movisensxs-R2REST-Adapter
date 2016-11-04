@@ -7,3 +7,4 @@ Depends:
     R (>= 3.2.0)
 License: LGPL
 LazyData: true
+Suggests: testthat
