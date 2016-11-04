@@ -1,3 +1,5 @@
+library(lubridate)
+
 completeMissingColumns = function(tbl, allColnames){
   additionalCols <- allColnames[!is.element(allColnames, colnames(tbl))]
   extendedTbl = tbl
@@ -11,14 +13,51 @@ completeMissingColumns = function(tbl, allColnames){
     tbl
 }
 
-auth <- function(apiKey){
-  add_headers("Authorization" = paste("ApiKey", apiKey, sep=" "))
+authHeader <- function(apiKey){
+  c(Authorization = paste("ApiKey", apiKey, sep=" "))
+}
+
+zipMIME <- 'application/zip'
+jsonMIME <- 'application/json'
+xlsxMIME <- 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
+acceptHeader <- function(mimetypes){
+  mimetypes_ <- paste(mimetypes, collapse=';')
+  c(Accept = mimetypes_)
 }
 
 getXSAPIURL <- function(xsServerURL){
   paste(xsServerURL, movisens.xsadapter.conf.apiPath, sep='/')
 }
 
-.hasContentType <- function(req, typeName){
-  length(grep(paste0('.*', typeName, '.*'), headers(req)[["Content-Type"]])) > 0
+.hasContentType <- function(response, typeName){
+  length(grep(paste0('.*', typeName, '.*'), headers(response)[["Content-Type"]])) > 0
+}
+
+parseSubjFormDates <- function(dateVec){
+  parsedDate <- parse_date_time(dateVec, "%Y%m%dT%H%M%OS%z", exact=TRUE)
+  parsedDate
+}
+
+parseMessageDates <- function(dateVec){
+  parsedDate <- parse_date_time(dateVec, "%Y-%m-%dT%H:%M:%OS%z", exact=TRUE)
+  parsedDate
+}
+
+extractZipFile <- function(response){
+  resultingZippedContent <- content(response, as = "raw", type=zipMIME)
+  tmpFile <- tempfile("unisensData", fileext = '.zip')
+  writeBin(resultingZippedContent, tmpFile)
+  tmpFile
+}
+
+extractXLSXFile <- function(response){
+  resultingZippedContent <- content(response, as = "raw", type=xlsxMIME)
+  tmpFile <- tempfile("subjectiveData", fileext = '.xlsx')
+  writeBin(resultingZippedContent, tmpFile)
+  tmpFile
+}
+
+fromJSON_ <- function(txt){
+  as.data.frame(fromJSON(txt))
 }

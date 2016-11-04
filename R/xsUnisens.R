@@ -5,37 +5,39 @@ library(logging)
 
 source('R/utils.R')
 source('R/config.R')
+source('R/xsExceptions.R')
+source('R/apiRoutes.R')
 
 downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
   getLogger('xs_adapter')
   loginfo(paste('Downloading from movisens-server', xsServerURL, '...'), logger='xs_adapter')
-  fromURL <- paste(getXSAPIURL(xsServerURL), .getUnisensPath(studyXSId, probandXSId), sep='/')
-  authHeader <- auth(apiKey)
+  fromURL <- paste(getXSAPIURL(xsServerURL), getUnisensPath(studyXSId, probandXSId), sep='/')
+  headers <- add_headers(authHeader(apiKey), acceptHeader(jsonMIME))
   loginfo(paste("Downloading zipped file by URL:", fromURL), logger='xs_adapter')
-  req <- GET(fromURL, authHeader)
-  result <- if(.hasContentType(req, 'application/json')){
-    .returnJSonErrorDescription(req)
-  }
-  else if(.hasContentType(req, 'application/zip')){
-    unisensFiles <- .returnUnzippedUnisensFiles(req)
-    c(unisensFolder = .getUnisensFolder(), basename(unisensFiles))
-  }
+  response <- GET(fromURL, headers)
+  .extractResultFromRequestUnis(response)
+}
+
+.extractResultFromRequestUnis <- function(response){
+  if(response$status_code == 404)
+    stop(xsExceptions['notFound'])
+  else if(response$status_code == 401)
+    stop(xsExceptions['invalidAPIKey'])
+  else if(.hasContentType(response, zipMIME))
+    .extractZipFilesUnis(response)
   else
-    NA
+    stop('The xs server responded with a request of an unknown type.')
+}
+
+.extractZipFilesUnis <- function(response){
+  unisensFiles <- .returnUnzippedUnisensFiles(response)
+  result <- c(unisensFolder = .getUnisensFolder(), basename(unisensFiles))
   loginfo(paste('Downloaded Unisens files:', paste(result, collapse=', ')), logger='xs_adapter')
   result
 }
 
-.returnJSonErrorDescription <- function(req){
-  resultsJson <- content(req, as = "text", encoding = "UTF-8")
-  errorDescr <- data.frame(fromJSON(resultsJson))
-  errorDescr
-}
-
-.returnUnzippedUnisensFiles <- function(req){
-  resultingZippedContent <- content(req, as = "raw", type='application/zip')
-  tmpFile <- tempfile("unisensData", fileext = '.zip')
-  writeBin(resultingZippedContent, tmpFile)
+.returnUnzippedUnisensFiles <- function(response){
+  tmpFile <- extractZipFile(response)
   unzippedResults <- .prepareFiles(tmpFile)
   unzippedResults
 }
@@ -60,8 +62,4 @@ downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
 
 .getUnisensFolder <- function(){
   unisensFolder <- paste(tempdir(), 'unisens', sep='/')
-}
-
-.getUnisensPath <- function(studyXSId, probandXSId){
-  paste('studies',studyXSId,'probands',probandXSId,'unisens', sep = '/')
 }
