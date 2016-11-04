@@ -1,5 +1,3 @@
-library(assertthat)
-
 setwd('../..')
 
 source('tests/testthat/_test.config.R')
