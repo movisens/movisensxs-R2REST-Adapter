@@ -12,4 +12,5 @@ Imports:
     logging,
     httr,
     jsonlite,
-    lubridate
+    lubridate,
+    digest
