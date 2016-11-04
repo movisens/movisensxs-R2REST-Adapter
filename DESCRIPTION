@@ -10,5 +10,5 @@ LazyData: true
 Suggests: testthat
 Imports:
     logging,
-    httr
+    httr,
     jsonlite
