@@ -1,11 +1,10 @@
-setwd('../..')
 
-source('tests/testthat/_test.config.R')
+source('_test.config.R')
 
 .checkSingleProbandResult <- function(result){
   expect_gt(nrow(result), 1)
   expectedColumns <- c('Participant', 'Device', 'Trigger', 'Trigger_counter', 'Form', 'Form_start_date', 'Form_finish_date', 'Form_upload_date', 'Missing')
-  expectedTbl <- readRDS('tests/testthat/data/testSubjectiveResult.rds')
+  expectedTbl <- readRDS('data/testSubjectiveResult.rds')
   expect_equal(result, expectedTbl)
 }
 
@@ -69,7 +68,7 @@ test_that('downloadSubjectiveDataAsJson_studyNotExistent_error', {
   errorOccurred <- NULL
 
   # operate
-  nonExistingStudy <- 'invalid id'
+  nonExistingStudy <- 'invalid_id'
   tryCatch({
     downloadSubjectiveDataAsJson(test.conf.serverURL, nonExistingStudy, test.conf.probandId, test.conf.apikey)
   }, error = function(e){

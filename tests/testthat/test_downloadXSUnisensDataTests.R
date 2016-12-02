@@ -1,6 +1,3 @@
-setwd('../..')
-
-source('tests/testthat/_test.config.R')
 
 test_that('downloadUnisensData_downloadUnisensData_unisensFiles', {
   # build
@@ -54,7 +51,7 @@ test_that('downloadUnisensData_studyNotExistent_error', {
   errorOccurred <- NULL
 
   # operate
-  nonExistingStudy <- 'invalid id'
+  nonExistingStudy <- 'invalid_id'
   tryCatch({
     downloadUnisensData(test.conf.serverURL, nonExistingStudy, test.conf.probandId, test.conf.apikey)
   }, error = function(e){

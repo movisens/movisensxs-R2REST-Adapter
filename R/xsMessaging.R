@@ -48,7 +48,7 @@ sendMessageToProband = function(xsServerURL, studyXSId, probandXSId, messageSend
     loginfo(paste('Result:', paste(unlist(results), collapse=',')), logger='xs_adapter')
     results
   } else
-    stop(paste("Error sending a message to a proband:", results))
+    stop(paste("Error sending a message to a proband:", sendResult[1,'error']))
 }
 
 .parseDateColumnsXSMsg <- function(resultTbl){

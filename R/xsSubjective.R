@@ -31,9 +31,9 @@ downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
     stop(xsExceptions['notFound'])
   else if(response$status_code == 401)
     stop(xsExceptions['invalidAPIKey'])
-  else if(.hasContentType(response, acceptHeader(jsonMIME)))
+  else if(.hasContentType(response, jsonMIME))
     .parseJsonRequestSubj(response)
-  else if(.hasContentType(response, acceptHeader(xlsxMIME)))
+  else if(.hasContentType(response, xlsxMIME))
     .extractXLSXRequestSubj(response)
   else
     stop('The xs server responded with a request of an unknown type.')

@@ -1,6 +1,5 @@
-setwd('../..')
 
-source('tests/testthat/_test.config.R')
+source('_test.config.R')
 
 test_that('downloadProbandTable_correctRequestParameters_validResult', {
   # build
@@ -8,7 +7,7 @@ test_that('downloadProbandTable_correctRequestParameters_validResult', {
   result <- downloadProbands(test.conf.serverURL, test.conf.studyId, test.conf.apikey)
 
   #check
-  expected_result <- readRDS('tests/testthat/data/testProbandResult.rds')
+  expected_result <- readRDS('data/testProbandResult.rds')
   expect_equal(result, expected_result)
 })
 
@@ -17,7 +16,7 @@ test_that('downloadProbandTable_studyNotExistent_error', {
   errorOccurred <- NULL
 
   # operate
-  nonExistingStudy <- 'invalid id'
+  nonExistingStudy <- 'invalid_id'
   tryCatch({
     downloadProbands(test.conf.serverURL, nonExistingStudy, test.conf.apikey)
   }, error = function(e){
