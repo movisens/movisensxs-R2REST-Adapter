@@ -1,4 +1,6 @@
-library(lubridate)
+#' @import lubridate
+#'
+NULL
 
 completeMissingColumns = function(tbl, allColnames){
   additionalCols <- allColnames[!is.element(allColnames, colnames(tbl))]
@@ -31,7 +33,11 @@ getXSAPIURL <- function(xsServerURL){
 }
 
 .hasContentType <- function(response, typeName){
-  length(grep(paste0('.*', typeName, '.*'), headers(response)[["Content-Type"]])) > 0
+  headers_ <- headers(response)
+  contentHeaders_ <- headers_[tolower(names(headers_)) == "content-type"]
+  any(sapply(contentHeaders_, function(contentType){
+    length(grep(paste0('.*', typeName, '.*'), contentType)) > 0
+  }))
 }
 
 parseSubjFormDates <- function(dateVec){

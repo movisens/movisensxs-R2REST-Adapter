@@ -1,10 +1,18 @@
 Package: movisensR2RESTAdapter
-Title: Library to export the functionality of the REST-API of the movisensxs server
-Version: 1.2.0
+Title: Library to export the functionality of the REST-API of the movisensxs
+    server
+Version: 1.2.1
 Authors@R: person("Jürgen", "Stumpp", email = "Stumpp@movisens.com", role = c("aut", "cre"))
 Description: Not all operations available!
 Depends:
     R (>= 3.2.0)
 License: LGPL
 LazyData: true
-Suggests: testthat
+Suggests:
+    testthat
+Imports:
+    logging,
+    httr,
+    jsonlite,
+    lubridate
+RoxygenNote: 5.0.1

@@ -1,21 +1,33 @@
-library(assertthat)
 
-setwd('../..')
+source('_test.config.R')
 
-source('tests/testthat/_test.config.R')
-source('R/xsMessaging.R')
+# test_that('integrationalTestWithMovisensXSServer_sendMessageToProband_serverAvailable_messageSent', {
+#   # build
+#   # operate
+#   testMessage <- 'Hallo!'
+#   result <- sendMessageToProband(test.conf.serverURL, test.conf.probandIdCoupled, test.conf.probandCoupledId, test.conf.messageSendingUserEmail, testMessage, test.conf.apikey)
+#
+#   # check
+#   expected_result <- readRDS('data/testMessageResult.rds')
+#   resultWithoutSendDate <- expected_result[c('id', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')]
+#   expectedResultWithoutSendDate <- expected_result[c('id', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')]
+#   expect_equal(resultWithoutSendDate, expectedResultWithoutSendDate)
+# })
 
-test_that('integrationalTestWithMovisensXSServer_sendMessageToProband_serverAvailable_messageSent', {
+test_that('integrationalTestWithMovisensXSServer_sendMessageToProbandNotCoupled_serverAvailable_error', {
   # build
+  errorOccurred <- NULL
+
   # operate
+  tryCatch({
   testMessage <- 'Hallo!'
-  result <- sendMessageToProband(test.conf.serverURL, test.conf.studyId, test.conf.probandId, test.conf.messageSendingUserEmail, testMessage, test.conf.apikey)
+    result <- sendMessageToProband(test.conf.serverURL, test.conf.studyId, test.conf.probandIdNotCoupled, test.conf.messageSendingUserEmail, testMessage, test.conf.apikey)
+  }, error = function(e){
+    errorOccurred <<- e
+  })
 
   # check
-  expected_result <- readRDS('tests/testthat/data/testMessageResult.rds')
-  resultWithoutSendDate <- expected_result[c('id', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')]
-  expectedResultWithoutSendDate <- expected_result[c('id', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')]
-  expect_equal(resultWithoutSendDate, expectedResultWithoutSendDate)
+  expect_equivalent(errorOccurred$message, xsExceptions['invalidAPIKey'])
 })
 
 test_that('downloadSubjectiveData_wrongAPIKey_error', {

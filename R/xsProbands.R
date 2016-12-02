@@ -1,14 +1,17 @@
-library(jsonlite)
-library(httr)
-library(digest)
-library(logging)
-
-source('R/utils.R')
-source('R/config.R')
-source('R/apiRoutes.R')
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#'
+NULL
 
 adapter.conf.probandColumns <- c("id", "currentVersion", "coupleURL", "status", "currentDevice", "coupleDate", "startDate", "endDate")
 
+#' Download all proband data of a study
+#' @param xsServerURL the address of the xs server
+#' @param studyId the xs-id of the study
+#' @param apiKey the secret api-key of the study
+#' @export
+#'
 downloadProbands <- function(xsServerURL, studyId, apiKey){
   getLogger('xs_adapter')
   loginfo("Downloading Probands from XSServer", logger='xs_adapter')

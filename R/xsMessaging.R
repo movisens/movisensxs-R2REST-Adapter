@@ -1,15 +1,22 @@
-library(httr)
-library(digest)
-library(logging)
-library(jsonlite)
-
-source('R/utils.R')
-source('R/config.R')
-source('R/xsExceptions.R')
-source('R/apiRoutes.R')
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#'
+NULL
 
 adapter.conf.xsMessagingColumns <- c('id', 'creationDate', 'message', 'messageRead', 'fromProband', 'sendingUserEmail')
 
+#' Send a message to a proband
+#'
+#' @param xsServerURL the address of the xs server
+#' @param studyXSId the study xs-id
+#' @param probandXSId the proband xs-id
+#' @param messageSendingUserEmail xs-user that is mentioned as sender
+#' @param textMessage the message content
+#' @param apiKey the api-key of the study
+#' @return Feedback from the xs server or exception
+#' @export
+#'
 sendMessageToProband = function(xsServerURL, studyXSId, probandXSId, messageSendingUserEmail, textMessage, apiKey){
   getLogger('xs_adapter')
   loginfo(paste("Sending message to proband", paste(studyXSId, probandXSId, sep = " x "), ". Message:", textMessage), logger='xs_adapter')
@@ -41,7 +48,7 @@ sendMessageToProband = function(xsServerURL, studyXSId, probandXSId, messageSend
     loginfo(paste('Result:', paste(unlist(results), collapse=',')), logger='xs_adapter')
     results
   } else
-    stop(paste("Error sending a message to a proband:", results))
+    stop(paste("Error sending a message to a proband:", sendResult[1,'error']))
 }
 
 .parseDateColumnsXSMsg <- function(resultTbl){

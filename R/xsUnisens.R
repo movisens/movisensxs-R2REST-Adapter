@@ -1,13 +1,17 @@
-library(jsonlite)
-library(httr)
-library(digest)
-library(logging)
+#' @import jsonlite
+#' @import httr
+#' @import logging
+#' @import utils
+NULL
 
-source('R/utils.R')
-source('R/config.R')
-source('R/xsExceptions.R')
-source('R/apiRoutes.R')
 
+#' Download all Unisens data of a study's proband as a zip file
+#' @param xsServerURL the address of the xs server
+#' @param studyXSId the xs-id of the study
+#' @param probandXSId the xs-id of the proband
+#' @param apiKey the secret api-key of the study
+#' @export
+#'
 downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
   getLogger('xs_adapter')
   loginfo(paste('Downloading from movisens-server', xsServerURL, '...'), logger='xs_adapter')
