@@ -21,8 +21,10 @@ downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
   getLogger('xs_adapter')
   headers <- add_headers(authHeader(apiKey), acceptHeader)
   loginfo(paste("Downloading Forms by URL:", operationCallPath), logger='xs_adapter')
+  logdebug(paste("Calling XS-API operation:", operationCallPath), logger='xs_adapter')
   response <- GET(operationCallPath, headers)
-  loginfo(paste('Response:', response), logger='xs_adapter')
+  loginfo(paste('Received response code to xs server request:', response$status_code), logger='xs_adapter')
+  logdebug(paste('Response:', response), logger='xs_adapter')
   .extractResultFromRequestSubj(response)
 }
 
@@ -43,7 +45,7 @@ downloadOverallSubjectiveDataAsJson <- function(xsServerURL, studyId, apiKey){
   resultsJson <- content(response, as = "text", encoding = "UTF-8")
   logdebug(paste('Response body:', resultsJson), logger='xs_adapter')
   results <- data.frame(fromJSON_(resultsJson))
-  logdebug(paste('downloadSubjectiveResultsAsJson:', results), logger='xs_adapter')
+  loginfo(paste('downloadSubjectiveResultsAsJson:', results), logger='xs_adapter')
   if(is.null(results[["error"]])){
     completedResults <- completeMissingColumns(results, adapter.conf.xsSubjectiveColumns)
     results <- .parseDateColumnsXSSubj(completedResults)

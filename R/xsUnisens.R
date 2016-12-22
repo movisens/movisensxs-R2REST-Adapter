@@ -18,11 +18,13 @@ downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
   fromURL <- paste(getXSAPIURL(xsServerURL), getUnisensPath(studyXSId, probandXSId), sep='/')
   headers <- add_headers(authHeader(apiKey), acceptHeader(jsonMIME))
   loginfo(paste("Downloading zipped file by URL:", fromURL), logger='xs_adapter')
+  logdebug(paste("Calling XS-API operation:", fromURL), logger='xs_adapter')
   response <- GET(fromURL, headers)
   .extractResultFromRequestUnis(response)
 }
 
 .extractResultFromRequestUnis <- function(response){
+  loginfo(paste('Received response code to xs server request:', response$status_code), logger='xs_adapter')
   if(response$status_code == 404)
     stop(xsExceptions['notFound'])
   else if(response$status_code == 401)
