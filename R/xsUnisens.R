@@ -16,7 +16,7 @@ downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
   getLogger('xs_adapter')
   loginfo(paste('Downloading from movisens-server', xsServerURL, '...'), logger='xs_adapter')
   fromURL <- paste(getXSAPIURL(xsServerURL), getUnisensPath(studyXSId, probandXSId), sep='/')
-  headers <- add_headers(authHeader(apiKey), acceptHeader(jsonMIME))
+  headers <- add_headers(authHeader(apiKey), acceptHeader(zipMIME))
   loginfo(paste("Downloading zipped file by URL:", fromURL), logger='xs_adapter')
   response <- GET(fromURL, headers)
   .extractResultFromRequestUnis(response)
@@ -24,9 +24,13 @@ downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
 
 .extractResultFromRequestUnis <- function(response){
   if(response$status_code == 404)
-    stop(xsExceptions['notFound'])
+    NULL
+  else if(response$status_code == 200 && .hasContentType(response, htmlMIME))
+    NULL
   else if(response$status_code == 401)
     stop(xsExceptions['invalidAPIKey'])
+  else if(response$status_code == 403)
+    stop(xsExceptions['forbidden'])
   else if(.hasContentType(response, zipMIME))
     .extractZipFilesUnis(response)
   else

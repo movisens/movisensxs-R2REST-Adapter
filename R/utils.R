@@ -21,6 +21,7 @@ authHeader <- function(apiKey){
 
 zipMIME <- 'application/zip'
 jsonMIME <- 'application/json'
+htmlMIME <- 'text/html'
 xlsxMIME <- 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 acceptHeader <- function(mimetypes){
