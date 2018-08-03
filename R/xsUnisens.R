@@ -26,9 +26,7 @@ downloadUnisensData <- function(xsServerURL, studyXSId, probandXSId, apiKey){
 .extractResultFromRequestUnis <- function(response){
   loginfo(paste('Received response code to xs server request:', response$status_code), logger='xs_adapter')
   if(response$status_code == 404)
-    NULL
-  else if(response$status_code == 200 && .hasContentType(response, htmlMIME))
-    NULL
+    stop(xsExceptions['notFound'])
   else if(response$status_code == 401)
     stop(xsExceptions['invalidAPIKey'])
   else if(response$status_code == 403)
