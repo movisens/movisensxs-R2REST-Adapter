@@ -1,7 +1,7 @@
 Package: movisensR2RESTAdapter
 Title: Library to export the functionality of the REST-API of the movisensxs
     server
-Version: 1.5.0
+Version: 1.5.1
 Authors@R: person("Jürgen", "Stumpp", email = "Stumpp@movisens.com", role = c("aut", "cre"))
 Description: Not all operations available!
 Depends:
@@ -15,4 +15,4 @@ Imports:
     httr,
     jsonlite,
     lubridate
-RoxygenNote: 6.1.0
+RoxygenNote: 5.0.1
