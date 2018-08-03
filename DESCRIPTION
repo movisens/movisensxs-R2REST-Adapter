@@ -15,4 +15,4 @@ Imports:
     httr,
     jsonlite,
     lubridate
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.0
