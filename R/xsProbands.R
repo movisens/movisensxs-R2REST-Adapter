@@ -17,8 +17,10 @@ downloadProbands <- function(xsServerURL, studyId, apiKey){
   loginfo("Downloading Probands from XSServer", logger='xs_adapter')
   fromURL <- paste(getXSAPIURL(xsServerURL), getProbandsPath(studyId), sep='/')
   headers <- add_headers(authHeader(apiKey), acceptHeader(jsonMIME))
+  logdebug(paste("Calling XS-API operation:", fromURL, logger='xs_adapter'))
+  logdebug(paste('AuthHeader attached:', headers), logger='xs_adapter')
   response <- GET(fromURL, headers)
-  loginfo(paste('AuthHeader attached:', headers), logger='xs_adapter')
+  loginfo(paste('Received response code to xs server request:', response$status_code), logger='xs_adapter')
   .extractResultFromRequestPrbs(response)
 }
 

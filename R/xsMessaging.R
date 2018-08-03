@@ -21,9 +21,11 @@ sendMessageToProband = function(xsServerURL, studyXSId, probandXSId, messageSend
   getLogger('xs_adapter')
   loginfo(paste("Sending message to proband", paste(studyXSId, probandXSId, sep = " x "), ". Message:", textMessage), logger='xs_adapter')
   messageSendUrl <- paste(getXSAPIURL(xsServerURL), getMessagePathOfProband(studyXSId, probandXSId, messageSendingUserEmail, textMessage), sep='/')
+  logdebug(paste("Calling XS-API operation:", messageSendUrl), logger='xs_adapter')
   headers <- add_headers(authHeader(apiKey), acceptHeader(jsonMIME))
   response <- POST(messageSendUrl, headers)
-  loginfo(paste('Response', response), logger='xs_adapter')
+  loginfo(paste('Received response code to xs server request:', response$status_code), logger='xs_adapter')
+  logdebug(paste('Response', response), logger='xs_adapter')
   .extractResultFromRequestMsg(response)
 }
 
