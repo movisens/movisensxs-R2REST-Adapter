@@ -1,4 +1,4 @@
-# movisensxs-R2REST-Adapter
+# movisensxs-R2REST-Adapter [![Build Status](https://travis-ci.org/movisens/movisensxs-R2REST-Adapter.svg?branch=master)](https://travis-ci.org/movisens/movisensxs-R2REST-Adapter)
 
 This library is a prototype to demonstrate how to access the BETA movisensXS Api in R.
 
